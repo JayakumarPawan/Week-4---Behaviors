@@ -5,11 +5,12 @@ using UnityEngine;
 public class MovementActivator : MonoBehaviour
 {
     [SerializeField] GameObject objectToActivate;
+    [SerializeField] GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
-        objectToActivate.GetComponent<MoveObject>().enabled = true;
+        
     }
 
     // Update is called once per frame
@@ -17,4 +18,18 @@ public class MovementActivator : MonoBehaviour
     {
         
     }
+
+    void OnTriggerEnter(Collider other) {
+         if (other == player.GetComponent<Collider>()) {
+            objectToActivate.GetComponent<MoveObject>().enabled = true;
+            objectToActivate.GetComponent<RotateObject>().enabled = false;
+         }
+     }
+     
+     void OnTriggerExit(Collider other) {
+         if (other == player.GetComponent<Collider>()) {
+            objectToActivate.GetComponent<MoveObject>().enabled = false;
+            objectToActivate.GetComponent<RotateObject>().enabled = true;
+         }
+     }
 }
